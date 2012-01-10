@@ -5,7 +5,12 @@ import grails.converters.JSON
 class StoreController {
   def json() {
     JSON.use("deep") {
-      render Store.findByName(params.name) as JSON
+      if (params.name) {
+        render Store.findByName(params.name) as JSON
+      }
+      else {
+        render null as JSON
+      }
     }
   }
 }
