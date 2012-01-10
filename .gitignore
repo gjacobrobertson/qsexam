@@ -1,7 +1,20 @@
-*.war
-*.class
-*.log
+# Grails wep app files
+/qsexam-rest/web-app/WEB-INF
+
+#IDE Files
 .classpath
-.DS_Store
 .project
 .settings
+
+# logs
+stacktrace.log
+/tests/reports
+
+#release file
+*.war
+
+#vim
+*.swp
+
+#compiled files
+*.class
