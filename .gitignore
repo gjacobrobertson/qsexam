@@ -1,0 +1,7 @@
+*.war
+*.class
+*.log
+.classpath
+.DS_Store
+.project
+.settings
