@@ -5,6 +5,7 @@
 .classpath
 .project
 .settings
+.metadata
 
 # logs
 stacktrace.log
