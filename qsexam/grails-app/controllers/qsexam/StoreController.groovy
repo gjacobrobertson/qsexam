@@ -4,13 +4,17 @@ import grails.converters.JSON
 
 class StoreController {
 
-	def json() {
+	def show() {
 		JSON.use("deep") {
+			def store = null;
 			if (params.q) {
-				render Store.findByName(params.q) as JSON
+				store = Store.findByName(params.q)
+			}
+			if (params.callback) {
+				render(contentType: "text/javascript", text: "${params.callback}(${store.encodeAsJSON()})")
 			}
 			else {
-				render null as JSON
+				render store as JSON
 			}
 		}
 	}
