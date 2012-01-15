@@ -12,6 +12,7 @@ import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 import com.google.gwt.http.client.URL;
+import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Button;
@@ -45,6 +46,7 @@ public class StoreFinder implements EntryPoint {
 		//Assemble Find Store Panel
 		findPanel.add(findTextBox);
 		findPanel.add(findButton);
+		findPanel.addStyleName("center");
 		
 		//Create the sales FlexTable
 		salesFlexTable.setText(0, 0, "Year");
@@ -54,15 +56,23 @@ public class StoreFinder implements EntryPoint {
 		salesFlexTable.setText(0, 4, "In Transit");
 		salesFlexTable.setText(0, 5, "On Hand");
 
+		salesFlexTable.getRowFormatter().addStyleName(0, "salesListHeader");
+		salesFlexTable.addStyleName("salesList center");
 		
 		//Assemble main panel
 		errorMsgLabel.setVisible(false);
+		salesFlexTable.setVisible(false);
+		
+		nameLabel.addStyleName("nameLabel center");
+		contactLabel.addStyleName("contactLabel center");
 		
 		mainPanel.add(errorMsgLabel);
 		mainPanel.add(findPanel);
 		mainPanel.add(nameLabel);
 		mainPanel.add(contactLabel);
 		mainPanel.add(salesFlexTable);
+		
+		mainPanel.addStyleName("center");
 		
 		//Associate main panel to host page
 		RootPanel.get("storeFinder").add(mainPanel);
@@ -99,9 +109,7 @@ public class StoreFinder implements EntryPoint {
 		if (null == store.getName()) {
 			nameLabel.setText("No store by that name was found");
 			contactLabel.setText("");
-			for(int i = salesFlexTable.getRowCount()-1; i > 0; i--) {
-				salesFlexTable.removeRow(i);
-			}
+			salesFlexTable.setVisible(false);
 			return;
 		}
 		nameLabel.setText(store.getName());
@@ -110,14 +118,22 @@ public class StoreFinder implements EntryPoint {
 	}
 	
 	private void updateTable(JsArray<Sales> sales) {
-		//Update sales list
+		salesFlexTable.setVisible(true);
 		for(int i = 0; i < sales.length(); i++){
+			NumberFormat currencyFormat = NumberFormat.getCurrencyFormat();
 			salesFlexTable.setText(i+1, 0, Integer.toString(sales.get(i).getYear()));
 			salesFlexTable.setText(i+1, 1, Integer.toString(sales.get(i).getWeek()));
-			salesFlexTable.setText(i+1, 2, Double.toString(sales.get(i).getSales()));
+			salesFlexTable.setText(i+1, 2, currencyFormat.format(sales.get(i).getSales()));
 			salesFlexTable.setText(i+1, 3, Integer.toString(sales.get(i).getSalesU()));
 			salesFlexTable.setText(i+1, 4, Integer.toString(sales.get(i).getInTransit()));
 			salesFlexTable.setText(i+1, 5, Integer.toString(sales.get(i).getStoreOH()));
+			
+			salesFlexTable.getCellFormatter().addStyleName(i+1, 0, "salesListColumn salesListDateColumn");
+			salesFlexTable.getCellFormatter().addStyleName(i+1, 1, "salesListColumn salesListDateColumn");
+			salesFlexTable.getCellFormatter().addStyleName(i+1, 2, "salesListColumn salesListNumericColumn");
+			salesFlexTable.getCellFormatter().addStyleName(i+1, 3, "salesListColumn salesListNumericColumn");
+			salesFlexTable.getCellFormatter().addStyleName(i+1, 4, "salesListColumn salesListNumericColumn");
+			salesFlexTable.getCellFormatter().addStyleName(i+1, 5, "salesListColumn salesListNumericColumn");
 		}
 		for(int i = salesFlexTable.getRowCount()-1; i > sales.length(); i--) {
 			salesFlexTable.removeRow(i);

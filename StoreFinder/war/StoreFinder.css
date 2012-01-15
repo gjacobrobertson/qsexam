@@ -1,0 +1,56 @@
+/* body */
+body {
+	background-color: #2176BA;
+	color:white;
+}
+
+/* header */
+h1 {
+	color: #FEC221;
+}
+
+/* center margin */
+.center {
+	margin-left: auto;
+	margin-right:auto;
+	text-align:center;
+}
+
+/* name label */
+.nameLabel {
+	font-weight: bold;
+}
+
+/* contact label */
+.contactLabel {
+	
+}
+
+/* sales list header row */
+.salesListHeader {
+	text-align: center;
+	font-weight: bold;
+	color: #FEC221;
+}
+
+/* sales list flex table */
+.salesList {
+	border-collapse: collapse;
+	border: 1px solid black;
+	padding: 1px solid black;
+}
+
+/* sales list columns */
+.salesListColumn {
+	width: 8em;
+	border: 1px solid black;
+	padding: 2px;
+}
+/* sales list date columns */
+.salesListDateColumn {
+	text-align:center;	
+}
+/* sales list numeric columns */
+.salesListNumericColumn {
+	text-align:right;
+}
