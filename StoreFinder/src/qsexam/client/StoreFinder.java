@@ -15,12 +15,12 @@ import com.google.gwt.http.client.URL;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.Range;
 
 public class StoreFinder implements EntryPoint {
@@ -35,7 +35,7 @@ public class StoreFinder implements EntryPoint {
 	private Button findButton = new Button("Find");
 	private Label nameLabel = new Label();
 	private Label contactLabel = new Label();
-	private CellTable<Sales> salesCellTable = new CellTable<Sales>();
+	private FlexTable salesFlexTable = new FlexTable();
 	
 	//Data
 	private int jsonRequestId = 0;
@@ -46,8 +46,14 @@ public class StoreFinder implements EntryPoint {
 		findPanel.add(findTextBox);
 		findPanel.add(findButton);
 		
-		//Create the sales cell table
-		initializeSalesTable();
+		//Create the sales FlexTable
+		salesFlexTable.setText(0, 0, "Year");
+		salesFlexTable.setText(0, 1, "Week");
+		salesFlexTable.setText(0, 2, "Sales $");
+		salesFlexTable.setText(0, 3, "Sales U");
+		salesFlexTable.setText(0, 4, "In Transit");
+		salesFlexTable.setText(0, 5, "On Hand");
+
 		
 		//Assemble main panel
 		errorMsgLabel.setVisible(false);
@@ -56,7 +62,7 @@ public class StoreFinder implements EntryPoint {
 		mainPanel.add(findPanel);
 		mainPanel.add(nameLabel);
 		mainPanel.add(contactLabel);
-		mainPanel.add(salesCellTable);
+		mainPanel.add(salesFlexTable);
 		
 		//Associate main panel to host page
 		RootPanel.get("storeFinder").add(mainPanel);
@@ -81,79 +87,21 @@ public class StoreFinder implements EntryPoint {
 		});
 	}
 	
-	private void initializeSalesTable() {
-		salesCellTable = new CellTable<Sales>();
-		
-		//Text Column for Year
-		TextColumn<Sales> yearColumn = new TextColumn<Sales>() {
-			@Override
-			public String getValue(Sales sales) {
-				return Integer.toString(sales.getYear());
-			}
-		};
-		salesCellTable.addColumn(yearColumn, "Year");
-		
-		//Text Column for Week
-		TextColumn<Sales> weekColumn = new TextColumn<Sales>() {
-			@Override
-			public String getValue(Sales sales) {
-				return Integer.toString(sales.getWeek());
-			}
-		};
-		salesCellTable.addColumn(weekColumn, "Week");
-		
-		//Text Column for Sales
-		TextColumn<Sales> salesColumn = new TextColumn<Sales>() {
-			@Override
-			public String getValue(Sales sales) {
-				return Double.toString(sales.getSales());
-			}
-		};
-		salesCellTable.addColumn(salesColumn, "Sales $");
-		
-		//Text Column for Sales U
-		TextColumn<Sales> salesUColumn = new TextColumn<Sales>() {
-			@Override
-			public String getValue(Sales sales) {
-				return Integer.toString(sales.getSalesU());
-			}
-		};
-		salesCellTable.addColumn(salesUColumn, "Sales U");
-		
-		//Text Column for In Transit
-		TextColumn<Sales> inTransitColumn = new TextColumn<Sales>() {
-			@Override
-			public String getValue(Sales sales) {
-				return Integer.toString(sales.getInTransit());
-			}
-		};
-		salesCellTable.addColumn(inTransitColumn, "In Transit");
-		
-		//Text Column for On Hand
-		TextColumn<Sales> storeOHColumn = new TextColumn<Sales>() {
-			@Override
-			public String getValue(Sales sales) {
-				return Integer.toString(sales.getStoreOH());
-			}
-		};
-		salesCellTable.addColumn(storeOHColumn, "On Hand");
-		
-		salesCellTable.setRowData(salesList);
-	}
+	
 
 	private void findStore() {
 		String url = JSON_URL + findTextBox.getText().trim();
-		System.out.println(url);
 		url = URL.encode(url) + "&callback=";
 		getJson(jsonRequestId++, url, this);
 	}
 	
 	private void updatePage(Store store) {
-		System.out.println(store.getName());
 		if (null == store.getName()) {
 			nameLabel.setText("No store by that name was found");
 			contactLabel.setText("");
-			updateTable(store.getSales());
+			for(int i = salesFlexTable.getRowCount()-1; i > 0; i--) {
+				salesFlexTable.removeRow(i);
+			}
 			return;
 		}
 		nameLabel.setText(store.getName());
@@ -163,13 +111,17 @@ public class StoreFinder implements EntryPoint {
 	
 	private void updateTable(JsArray<Sales> sales) {
 		//Update sales list
-		salesList.clear();
 		for(int i = 0; i < sales.length(); i++){
-			salesList.add(sales.get(i));
+			salesFlexTable.setText(i+1, 0, Integer.toString(sales.get(i).getYear()));
+			salesFlexTable.setText(i+1, 1, Integer.toString(sales.get(i).getWeek()));
+			salesFlexTable.setText(i+1, 2, Double.toString(sales.get(i).getSales()));
+			salesFlexTable.setText(i+1, 3, Integer.toString(sales.get(i).getSalesU()));
+			salesFlexTable.setText(i+1, 4, Integer.toString(sales.get(i).getInTransit()));
+			salesFlexTable.setText(i+1, 5, Integer.toString(sales.get(i).getStoreOH()));
 		}
-		salesCellTable.setRowCount(sales.length());
-		salesCellTable.setVisibleRange(new Range(0, sales.length()));
-		salesCellTable.setRowData(0, salesList);
+		for(int i = salesFlexTable.getRowCount()-1; i > sales.length(); i--) {
+			salesFlexTable.removeRow(i);
+		}
 	}
 	
 	private void displayError(String error) {

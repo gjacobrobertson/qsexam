@@ -1,5 +1,4 @@
 dataSource {
-    pooled = true
 	dbCreate = "validate"
 	driverClassName = "com.mysql.jdbc.Driver"
 	dialect = org.hibernate.dialect.MySQL5InnoDBDialect
