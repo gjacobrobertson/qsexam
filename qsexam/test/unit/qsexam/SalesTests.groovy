@@ -1,4 +1,4 @@
-package org.qsexam
+package qsexam
 
 
 

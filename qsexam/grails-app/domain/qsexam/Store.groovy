@@ -1,4 +1,6 @@
-package org.qsexam
+package qsexam
+
+import java.util.SortedSet;
 
 class Store {
 	String name
