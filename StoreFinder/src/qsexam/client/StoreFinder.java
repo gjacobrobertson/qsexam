@@ -23,7 +23,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 
 public class StoreFinder implements EntryPoint {
 
-	private static final String JSON_URL = "http://localhost:8080/qsexam/store/show?q=";
+	private static final String JSON_URL = "http://qsexam.the-treasury.net/store/show?q=";
 	
 	//Widgets
 	private VerticalPanel mainPanel = new VerticalPanel();
