@@ -14,9 +14,11 @@ The service can be started by executing
 
   >grails run-app
 
-By default this will start the service at 'http://localhost:8000/qsexam'
-A JSON representation of Stores can be found at 'stores/show/?q=<Store Name>'
-Additionally, the JSON can be wrapped in a JavaScript callback function with the callback parameter, e.g. 'http://localhost:8000/qsexam/store/show/?q=Atlanta&callback=callback1'. This is useful for GWT clients to be able to make cross site requests to a remote server running the service.
+By default this will start the service at 'http://localhost:8000/qsexam'.
+A JSON representation of Stores can be found at 'stores/show/?q=<Store Name>'.
+Additionally, the JSON can be wrapped in a JavaScript callback function with the callback parameter,
+e.g. 'http://localhost:8000/qsexam/store/show/?q=Atlanta&callback=callback1'.
+This is useful for GWT clients to be able to make cross site requests to a remote server running the service.
 
 ## Web Application
 
@@ -24,7 +26,7 @@ The Web Application portion of the QuantiSense Software Challenge resides in the
 
 ### Dependencies
 
-The application is written with [Google Web Toolkit](http://code.google.com/webtoolkit)
+The application is written with [Google Web Toolkit](http://code.google.com/webtoolkit).
 It is built targetting the GWT 2.4.0 SDK.
 
 
