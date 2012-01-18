@@ -7,7 +7,7 @@ The RESTful service portion of the QuantiSense Software Challenge resides in the
 ### Dependencies
 
 The service is written in the Grails framework.
-It uses version 2.0.0, which can be downloaded [here](grails.org/Download)
+It uses version 2.0.0, which can be downloaded [here](http://grails.org/Download)
 
 ### Use
 The service can be started by executing
@@ -24,7 +24,7 @@ The Web Application portion of the QuantiSense Software Challenge resides in the
 
 ### Dependencies
 
-The application is written with [Google Web Toolkit](code.google.com/webtoolkit)
+The application is written with [Google Web Toolkit](http://code.google.com/webtoolkit)
 It is built targetting the GWT 2.4.0 SDK.
 
 
