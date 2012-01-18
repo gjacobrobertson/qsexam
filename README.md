@@ -12,7 +12,7 @@ It uses version 2.0.0, which can be downloaded [here](http://grails.org/Download
 ### Use
 The service can be started by executing
 
-  grails run-app
+  >grails run-app
 
 By default this will start the service at 'http://localhost:8000/qsexam'
 A JSON representation of Stores can be found at 'stores/show/?q=<Store Name>'
